@@ -8,10 +8,10 @@ namespace NetCoreApplicationRepository.Data.Interafaces
 {
     public interface IEmployee
     {
-        Task<List<Employee>> GetEmployees();
-        Task<Employee> GetEmployeeById(int id);
-        Task<bool> AddEmployee(Employee employee);
-        Task<bool> UpdateEmployee(Employee employee);
-        Task<bool> DeleteEmployee(Employee employee);
+        List<Employee>GetEmployees();
+        Employee GetEmployeeById(int id);
+        void AddEmployee(Employee employee);
+        void UpdateEmployee(Employee employee);
+        void DeleteEmployee(Employee employee);
     }
 }

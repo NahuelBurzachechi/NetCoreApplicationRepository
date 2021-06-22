@@ -1,4 +1,5 @@
 ﻿using NetCoreApplicationRepository.Data.Interafaces;
+using NetCoreApplicationRepository.db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,38 @@ namespace NetCoreApplicationRepository.Data.Services
 {
     public class EmployeeServices : IEmployee
     {
-        public Task<bool> AddEmployee(Employee employee)
+        private EmployeeContext _employeeContext;
+        public EmployeeServices(EmployeeContext employeeContext)
         {
-            throw new NotImplementedException();
+            _employeeContext = employeeContext;
+        }
+        public void AddEmployee(Employee employee)
+        {
+            _employeeContext.Employees.Add(employee);
+            _employeeContext.SaveChanges();
         }
 
-        public Task<bool> DeleteEmployee(Employee employee)
+        public void DeleteEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            _employeeContext.Employees.Remove(employee);
+            _employeeContext.SaveChanges();
+
         }
 
-        public Task<Employee> GetEmployeeById(int id)
+        public Employee GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            return _employeeContext.Employees.Find(id);
         }
 
-        public Task<List<Employee>> GetEmployees()
+        public List<Employee> GetEmployees()
         {
-            throw new NotImplementedException();
+            return _employeeContext.Employees.ToList();
         }
 
-        public Task<bool> UpdateEmployee(Employee employee)
+        public void UpdateEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            _employeeContext.Employees.Update(employee);
+            _employeeContext.SaveChanges();
         }
     }
 }

@@ -22,16 +22,16 @@ namespace NetCoreApplicationRepository.Controllers
 
         [HttpGet]
         [Route("api/[controller]")]
-        public async Task<IActionResult> GetEmployees()
+        public IActionResult GetEmployees()
         {
-            return Ok(await _employee.GetEmployees());
+            return Ok(_employee.GetEmployees());
         }
 
         [HttpGet]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        public IActionResult GetEmployeeById(int id)
         {
-            var employee = await _employee.GetEmployeeById(id);
+            var employee = _employee.GetEmployeeById(id);
             if (employee != null)
                 return Ok(employee);
             else
@@ -40,20 +40,20 @@ namespace NetCoreApplicationRepository.Controllers
 
         [HttpPost]
         [Route("api/[controller]/addEmployee")]
-        public async Task<IActionResult> AddEmployee(Employee employee)
+        public IActionResult AddEmployee(Employee employee)
         {
-            await _employee.AddEmployee(employee);
+            _employee.AddEmployee(employee);
             return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + employee.Id, employee);
         }
 
         [HttpDelete]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public IActionResult DeleteEmployee(int id)
         {
-            var employee = await _employee.GetEmployeeById(id);
+            var employee = _employee.GetEmployeeById(id);
             if (employee != null)
             {
-                await _employee.DeleteEmployee(employee);
+                _employee.DeleteEmployee(employee);
                 return Ok($"Employee {id} was eliminated.");
             }
             else
@@ -62,14 +62,14 @@ namespace NetCoreApplicationRepository.Controllers
 
         [HttpPatch]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> UpdateEmployee(Employee employee)
+        public IActionResult UpdateEmployee(int id, Employee employee)
         {
-            var updateEmployee = await _employee.GetEmployeeById(employee.Id);
+            var updateEmployee = _employee.GetEmployeeById(id);
             if(updateEmployee != null) 
             {
                 updateEmployee.Name = employee.Name;
-                await _employee.UpdateEmployee(updateEmployee);
-                return Ok($"Employee {employee.Id} was updated.");
+                _employee.UpdateEmployee(updateEmployee);
+                return Ok($"Employee {id} was updated.");
             }
             else
             {
